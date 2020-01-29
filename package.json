@@ -15,10 +15,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "docker-install-dependecies": "docker exec auth_consumer_dev npm install --silent",
     "dev-clean": "docker-compose -f ./docker/docker-compose.dev.yml -p survey_auth_front down",
     "dev-build": "docker-compose -f ./docker/docker-compose.dev.yml -p survey_auth_front build --pull --no-cache",
     "dev-up": "docker-compose -f ./docker/docker-compose.dev.yml -p survey_auth_front up -d --remove-orphans",
-    "install-dev": "npm run dev-clean && npm run dev-build && npm run dev-up"
+    "install-dev": "npm run dev-clean && npm run dev-build && npm run dev-up && npm run docker-install-dependecies"
   },
   "eslintConfig": {
     "extends": "react-app"
