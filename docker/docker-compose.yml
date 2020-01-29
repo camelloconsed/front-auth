@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+
+  app:
+    container_name: auth_consumer
+    build:
+      context: ../
+      dockerfile: docker/production/app.dockerfile
+      target: server
+    environment:
+      NODE_ENV: production
