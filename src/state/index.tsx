@@ -9,6 +9,9 @@ const enhancers = [];
 const saga = createSagaMiddleware();
 const middleware = [ saga ];
 
+declare global {
+  interface Window { __REDUX_DEVTOOLS_EXTENSION__: any; }
+}
 
 if (process.env.NODE_ENV === 'development') {
   const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;

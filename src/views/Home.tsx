@@ -1,7 +1,7 @@
 import React from 'react';
 import { Example } from '../components';
 
-const Home = (props) => {
+const Home: React.FC = (props) => {
   return (
     <Example/>
   );
