@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+
+  app:
+    container_name: auth_consumer_dev
+    build:
+      context: ../
+      dockerfile: docker/development/app.dockerfile
+    command: npm start
+    volumes:
+      - ../:/usr/src/app
+    ports:
+      - "3000:3000"
