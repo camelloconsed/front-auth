@@ -25,7 +25,9 @@
     "dev-clean": "docker-compose -f ./docker/docker-compose.dev.yml -p survey_auth_front down",
     "dev-build": "docker-compose -f ./docker/docker-compose.dev.yml -p survey_auth_front build --pull --no-cache",
     "dev-up": "docker-compose -f ./docker/docker-compose.dev.yml -p survey_auth_front up -d --remove-orphans",
-    "install-dev": "npm run dev-clean && npm run dev-build && npm run dev-up && npm run docker-install-dependecies"
+    "install-dev": "npm run dev-clean && npm run dev-build && npm run dev-up && npm run docker-install-dependecies",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "prettier": "prettier \"./src/**/*.{js,jsx,json,yaml,yml,md,tsx}\" --write"
   },
   "eslintConfig": {
     "extends": "react-app"
