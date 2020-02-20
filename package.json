@@ -25,7 +25,9 @@
     "dev-clean": "docker-compose -f ./docker/docker-compose.dev.yml -p survey_auth_front down",
     "dev-build": "docker-compose -f ./docker/docker-compose.dev.yml -p survey_auth_front build --pull --no-cache",
     "dev-up": "docker-compose -f ./docker/docker-compose.dev.yml -p survey_auth_front up -d --remove-orphans",
-    "install-dev": "npm run dev-clean && npm run dev-build && npm run dev-up && npm run docker-install-dependecies"
+    "install-dev": "npm run dev-clean && npm run dev-build && npm run dev-up && npm run docker-install-dependecies",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "prettier": "prettier \"./src/**/*.{js,jsx,json,yaml,yml,md,tsx}\" --write"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,6 +47,37 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2"
+    "@testing-library/user-event": "^7.1.2",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-react": "^7.18.0",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.6",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "stylelint": "^13.0.0",
+    "stylelint-config-standard": "^19.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.scss": [
+      "stylelint --fix --syntax scss",
+      "git add"
+    ]
   }
 }
