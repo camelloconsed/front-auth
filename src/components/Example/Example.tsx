@@ -1,8 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
-import './Example.css';
+import React from 'react'
+import logo from './logo.svg'
+import './Example.css'
 
-const Example: React.FC = (props) => {
+const Example: React.FC = props => {
   return (
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
@@ -18,7 +18,7 @@ const Example: React.FC = (props) => {
         Learn React
       </a>
     </header>
-  );
-};
+  )
+}
 
-export default Example;
+export default Example
