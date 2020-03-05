@@ -1,4 +1,4 @@
-image: customregistry/docker-builder:latest
+image: docker:latest
 
 variables:
     IMAGE_NAME: survey-auth-consumer
