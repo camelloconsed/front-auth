@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Col, Navbar, Button, Row, Image, Card, Form } from 'react-bootstrap'
-import Logo from './logoSurvi.png'
+import Logo from './logo-survi.png'
 
 const NavBar = () => {
   return (
@@ -8,8 +8,8 @@ const NavBar = () => {
       <Row className="bg-white">
         <Col>
           <Navbar bg="white" variant="light">
-            <Navbar.Brand href="#home">
-              <Image src={Logo} className="sizeLogo" />
+            <Navbar.Brand href="#">
+              <Image src={Logo} width="160" height="30"/>
             </Navbar.Brand>
           </Navbar>
         </Col>
@@ -47,7 +47,11 @@ const NavBar = () => {
                 </div>
                 <br />
                 <div className="float-left mx-3 mb-5">
-                  <Button variant="outline-light" type="submit" className="text-info px-3">
+                  <Button
+                    variant="outline-light"
+                    type="submit"
+                    className="text-info px-3"
+                  >
                     Crear cuenta
                   </Button>
                 </div>
