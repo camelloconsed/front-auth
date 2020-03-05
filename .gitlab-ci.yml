@@ -1,0 +1,22 @@
+image: docker:latest
+
+variables:
+    IMAGE_NAME: survey-auth-consumer
+    DOCKER_TAG: latest
+    REGISTRY_URL: registry.gitlab.com/jumpitt-backend/survey
+    IMAGE: $REGISTRY_URL/$IMAGE_NAME:$DOCKER_TAG
+
+stages:
+    - build
+
+before_script:
+    - docker info
+    - echo $IMAGE
+    - docker login -u gitlab-ci-token -p \$CI_JOB_TOKEN registry.gitlab.com
+
+build:
+    stage: build
+    script:
+        - echo "Building"
+        - docker-compose -f ./docker/docker-compose.yml -p $IMAGE build --pull --no-cache
+        - docker push $IMAGE
