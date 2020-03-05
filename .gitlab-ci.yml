@@ -1,4 +1,4 @@
-image: docker:latest
+image: customregistry/docker-builder:latest
 
 variables:
     IMAGE_NAME: survey-auth-consumer
@@ -10,12 +10,14 @@ stages:
     - build
 
 before_script:
-    - docker info
     - echo $IMAGE
+    - docker info
     - docker login -u gitlab-ci-token -p \$CI_JOB_TOKEN registry.gitlab.com
 
 build:
     stage: build
+    services:
+        - docker:dind
     script:
         - echo "Building"
         - docker-compose -f ./docker/docker-compose.yml -p $IMAGE build --pull --no-cache
