@@ -9,7 +9,6 @@ const Home: React.FC = props => {
     <BrowserRouter>
       <Route path="/" exact render={Login} />
       <Route path="/login" render={LoginMail} />
-      {/* <Route path="/login-google" render={LoginGoogle} /> */}
     </BrowserRouter>
   )
 }

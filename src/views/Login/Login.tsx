@@ -13,7 +13,7 @@ const Login = () => {
           <Row>
             <Col xs={6}>
               <div className="my-5">
-                {/*este logo no es oficial, necesito el logo en svg */}
+                {/*This logo is not official, I need the logo in svg*/}
                 <Image src={Logo} />
               </div>
 
