@@ -1,10 +1,16 @@
-import React from 'react';
-import { Example } from '../components';
+import React from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
 
-const Home: React.FC = (props) => {
+import Login from './Login/Login'
+import LoginMail from './Login/LoginMail'
+
+const Home: React.FC = props => {
   return (
-    <Example/>
-  );
-};
+    <BrowserRouter>
+      <Route path="/" exact render={Login} />
+      <Route path="/login" render={LoginMail} />
+    </BrowserRouter>
+  )
+}
 
-export default Home;
+export default Home
