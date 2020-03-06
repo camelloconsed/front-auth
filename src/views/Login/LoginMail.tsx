@@ -2,20 +2,20 @@ import React, { Fragment } from 'react'
 import { Col, Navbar, Button, Row, Image, Card, Form } from 'react-bootstrap'
 import Logo from './logo-survi.png'
 
-const NavBar = () => {
+const LoginMail = () => {
   return (
     <Fragment>
       <Row className="bg-white">
         <Col>
           <Navbar bg="white" variant="light">
-            <Navbar.Brand href="#">
-              <Image src={Logo} width="160" height="30"/>
+            <Navbar.Brand>
+              <Image src={Logo} width="160" height="30" />
             </Navbar.Brand>
           </Navbar>
         </Col>
       </Row>
       <Row className="justify-content-center mt-5 bgLogin">
-        <Card border="light" className="shadow-sm">
+        <Card border="light" className="shadow-sm mt-5">
           <Card.Body>
             <div className="text-center my-5">
               <Card.Title>
@@ -23,20 +23,30 @@ const NavBar = () => {
               </Card.Title>
               <Card.Text>Ingresa tus datos para comenzar</Card.Text>
             </div>
-            <div className="mx-5">
+            <div className="mx-5 clearfix">
               <Form>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>
                     <strong>CORREO ELECTRÓNICO</strong>
                   </Form.Label>
-                  <Form.Control type="email" placeholder="Ingresa tu correo" />
+                  <Form.Control
+                    required
+                    type="email"
+                    placeholder="Ingresa tu correo"
+                    name="email"
+                  />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>
                     <strong>CONTRASEÑA</strong>
                   </Form.Label>
-                  <Form.Control type="password" placeholder="Ingresa tu contraseña" />
+                  <Form.Control
+                    required
+                    type="password"
+                    placeholder="Ingresa tu contraseña"
+                    name="password"
+                  />
                 </Form.Group>
                 <div className="text-info float-right mb-5">
                   <p>
@@ -47,11 +57,7 @@ const NavBar = () => {
                 </div>
                 <br />
                 <div className="float-left mx-3 mb-5">
-                  <Button
-                    variant="outline-light"
-                    type="submit"
-                    className="text-info px-3"
-                  >
+                  <Button variant="link" type="submit">
                     Crear cuenta
                   </Button>
                 </div>
@@ -69,4 +75,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+export default LoginMail

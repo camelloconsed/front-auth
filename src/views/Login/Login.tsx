@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Row, Col, Button, Badge, Image, Container } from 'react-bootstrap'
+import { Row, Col, Button, Badge, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import Logo from './logo-survi.png'
