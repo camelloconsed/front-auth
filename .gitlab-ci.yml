@@ -3,7 +3,7 @@ image: docker:latest
 variables:
     IMAGE_NAME: survey-auth-consumer
     DOCKER_TAG: latest
-    REGISTRY_URL: $CI_REGISTRY/jumpitt-backend/survey
+    REGISTRY_URL: registry.gitlab.com/jumpitt-backend/survey
     IMAGE: $REGISTRY_URL/$IMAGE_NAME:$DOCKER_TAG
 
 stages:
@@ -11,10 +11,6 @@ stages:
 
 before_script:
     - echo $IMAGE
-    - docker info
-    - echo $CI_JOB_USER
-    - echo $CI_JOB_TOKEN
-    - echo $CI_REGISTRY
     - docker login -u $CI_JOB_USER -p $CI_JOB_TOKEN $CI_REGISTRY
     - apk update
     - apk add --no-cache py-pip
