@@ -16,8 +16,11 @@ before_script:
     - echo $CI_JOB_TOKEN
     - echo $CI_REGISTRY
     - docker login -u $CI_JOB_USER -p $CI_JOB_TOKEN $CI_REGISTRY
-    - curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-    - chmod +x /usr/local/bin/docker-compose
+    - apk update
+    - pip install -U setuptools
+    - apk add python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install --upgrade pip
+    - pip install docker-compose
     - docker-compose --version
 
 build:
