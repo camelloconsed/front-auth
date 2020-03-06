@@ -4,13 +4,13 @@ variables:
     IMAGE_NAME: survey-auth-consumer
     DOCKER_TAG: latest
     REGISTRY_URL: registry.gitlab.com/jumpitt-backend/survey
-    IMAGE: $REGISTRY_URL/$IMAGE_NAME:$DOCKER_TAG
+    DOCKER_IMAGE: $REGISTRY_URL/$IMAGE_NAME:$DOCKER_TAG
 
 stages:
     - build
 
 before_script:
-    - echo $IMAGE
+    - echo $DOCKER_IMAGE
     - docker login -u $CI_JOB_USER -p $CI_JOB_TOKEN $CI_REGISTRY
     - apk update
     - apk add --no-cache py-pip
@@ -26,5 +26,5 @@ build:
         - docker:dind
     script:
         - echo "Building"
-        - docker-compose -f ./docker/docker-compose.yml -p $IMAGE build --pull --no-cache
-        - docker push $IMAGE
+        - docker-compose -f ./docker/docker-compose.yml build --pull --no-cache
+        - docker push $DOCKER_IMAGE

@@ -4,6 +4,7 @@ services:
 
   app:
     container_name: auth_consumer
+    image: ${DOCKER_IMAGE}
     build:
       context: ../
       dockerfile: docker/production/app.dockerfile
