@@ -1,4 +1,4 @@
-image: docker:latest
+image: registry.gitlab.com/jumpitt-backend/survey/survey-auth-consumer/dind-awscli
 
 variables:
     IMAGE_NAME: survey-auth-consumer
@@ -10,15 +10,7 @@ stages:
     - build
 
 before_script:
-    - echo $DOCKER_IMAGE
-    - apk update
-    - apk add --no-cache py-pip
-    - pip install -U setuptools
-    - apk add python-dev libffi-dev openssl-dev gcc libc-dev make
-    - pip install --upgrade pip
-    - pip install docker-compose
     - docker-compose --version
-    - pip install awscli
     - aws --version
     - $(aws ecr get-login --no-include-email --region $AWS_REGION)
 
@@ -27,6 +19,5 @@ build:
     services:
         - docker:dind
     script:
-        - echo "Building"
         - docker-compose -f ./docker/docker-compose.yml build --pull --no-cache
         - docker push $DOCKER_IMAGE
