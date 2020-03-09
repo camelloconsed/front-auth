@@ -8,6 +8,7 @@ variables:
 
 stages:
     - build
+    - deploy
 
 before_script:
     - docker-compose --version
@@ -21,3 +22,14 @@ build:
     script:
         - docker-compose -f ./docker/docker-compose.yml build --pull --no-cache
         - docker push $DOCKER_IMAGE
+
+deploy:
+    stage: deploy
+    services:
+        - docker:dind
+    script:
+        - aws ecs update-service \
+          --cluster $AWS_CLUSTER \
+          --service $AWS_SERVICE \
+          --task-definition $AWS_TASK_DEF \
+          --region $AWS_REGION
