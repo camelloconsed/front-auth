@@ -51,7 +51,7 @@ const Login = () => {
                   </a>
                 </div>
                 <div className="mb-5">
-                  <Link to="/signin" className="text-decoration-none">
+                  <Link to="/register" className="text-decoration-none">
                     <Button variant="outline-dark" className="py-3" block>
                       <div className="d-flex justify-content-center">
                         <div>Crear cuenta</div>
