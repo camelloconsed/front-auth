@@ -1,0 +1,46 @@
+image: jnaxo/dind-awscli:latest
+
+variables:
+    IMAGE_NAME: survey-auth-consumer
+    DOCKER_TAG: latest
+    REGISTRY_URL: 711021018325.dkr.ecr.us-west-2.amazonaws.com
+    DOCKER_IMAGE: $REGISTRY_URL/$IMAGE_NAME:$DOCKER_TAG
+
+stages:
+    - build
+    - deploy
+
+before_script:
+    - docker-compose --version
+    - aws --version
+    - $(aws ecr get-login --no-include-email --region $AWS_REGION)
+
+build_review:
+    stage: build
+    services:
+        - docker:dind
+    script:
+        - docker-compose -f ./docker/docker-compose.yml build --pull --no-cache
+    only: [merge_requests]
+    except: [/^release/]
+
+build_dev:
+    stage: build
+    services:
+        - docker:dind
+    script:
+        - docker-compose -f ./docker/docker-compose.yml build --pull --no-cache
+        - docker push $DOCKER_IMAGE
+    only:
+        - develop
+
+deploy_dev:
+    stage: deploy
+    services:
+        - docker:dind
+    script:
+        - aws ecs describe-task-definition --task-definition $AWS_TASK_DEF --region $AWS_REGION | python /task-def-parser.py > task.json
+        - aws ecs register-task-definition --family $AWS_TASK_DEF --requires-compatibilities FARGATE --cli-input-json file://task.json --region $AWS_REGION
+        - aws ecs update-service --cluster $AWS_CLUSTER --service $AWS_SERVICE --task-definition $AWS_TASK_DEF --region $AWS_REGION
+    only:
+        - develop
