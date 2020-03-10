@@ -1,4 +1,4 @@
-image: registry.gitlab.com/jumpitt-backend/survey/survey-auth-consumer/dind-awscli
+image: jnaxo/dind-awscli:latest
 
 variables:
     IMAGE_NAME: survey-auth-consumer
@@ -28,4 +28,6 @@ deploy:
     services:
         - docker:dind
     script:
+        - aws ecs describe-task-definition --task-definition $AWS_TASK_DEF --region $AWS_REGION | python task-def-parser.py > task.json
+        - aws ecs register-task-definition --family $AWS_TASK_DEF --requires-compatibilities FARGATE --cli-input-json file://task.json --region $AWS_REGION
         - aws ecs update-service --cluster $AWS_CLUSTER --service $AWS_SERVICE --task-definition $AWS_TASK_DEF --region $AWS_REGION
