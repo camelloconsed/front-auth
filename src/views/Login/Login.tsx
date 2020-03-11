@@ -9,67 +9,52 @@ const Login = () => {
     <Fragment>
       <Row>
         <Col xs={6}></Col>
-        <Col xs={6} className="bg-white px-5 vh-100">
-          <Row>
-            <Col xs={6}>
-              <div className="my-5">
-                {/*This logo is not official, I need the logo in svg*/}
-                <Image src={Logo} />
+        <Col xs={6} className="bg-white">
+          <div className="mt-5 w-50 vh-100 d-flex flex-column">
+            <div className="mt-5 ml-5">
+              {/*This logo is not official, I need the logo in svg*/}
+              <Image src={Logo} />
+            </div>
+
+            <div className="mx-4 pl-5 my-auto">
+              <div className="mb-5">
+                <h5>Inicia Sesión</h5>
               </div>
 
-              <div className="">
-                <div className="mb-4 mt-5 float-left">
-                  <h5>Inicia Sesión</h5>
-                </div>
+              <Link to="/login" className="text-decoration-none">
+                <Button variant="primary" className="py-3" block>
+                  <i className="fas fa-envelope"></i> Ingresa con correo
+                </Button>
+              </Link>
 
-                <div>
-                  <Link to="/login" className="text-light text-decoration-none">
-                    <Button variant="primary" className="px-5 py-3 my-3" block>
-                      <div className="d-flex justify-content-center">
-                        <div className="mr-2">
-                          <i className="fas fa-envelope"></i>
-                        </div>
-                        <div>Ingresa con correo</div>
-                      </div>
-                    </Button>
-                  </Link>
-                </div>
-                <div className="mb-5">
-                  <Button variant="light" className="px-5 py-3 my-3" block>
-                    <div className="d-flex justify-content-center">
-                      <div className="mr-2">
-                        <i className="fab fa-google"></i>
-                      </div>
-                      <div>Ingresa con Google</div>
-                    </div>
+              <div className="mb-5">
+                <Button variant="light" className="py-3 my-3" block>
+                  <i className="fab fa-google"></i> Ingresa con Google
+                </Button>
+              </div>
+
+              <div className="mb-2 text-center">
+                <a href="#" className="text-decoration-none text-dark">
+                  ¿No tienes cuenta?
+                </a>
+              </div>
+              <div className="mb-5">
+                <Link to="/register" className="text-decoration-none">
+                  <Button variant="outline-dark" className="py-3" block>
+                    Crear cuenta
                   </Button>
-                </div>
-
-                <div className="mt-5 mb-3 text-center">
-                  <a href="#" className="text-decoration-none text-dark">
-                    ¿No tienes cuenta?
-                  </a>
-                </div>
-                <div className="mb-5">
-                  <Link to="/register" className="text-decoration-none">
-                    <Button variant="outline-dark" className="py-3" block>
-                      <div className="d-flex justify-content-center">
-                        <div>Crear cuenta</div>
-                      </div>
-                    </Button>
-                  </Link>
-                </div>
-
-                <div className="text-center">
-                  <small>
-                    <Badge pill variant="light">
-                      Powered by Survi
-                    </Badge>
-                  </small>
-                </div>
+                </Link>
               </div>
-            </Col>
-          </Row>
+
+              <div className="text-center">
+                <small>
+                  <Badge pill variant="light">
+                    Powered by Survi
+                  </Badge>
+                </small>
+              </div>
+            </div>
+          </div>
         </Col>
       </Row>
     </Fragment>
