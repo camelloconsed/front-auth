@@ -45,11 +45,12 @@ const LoginMail = () => {
               <Formik
                 initialValues={{ email: '', password: '' }}
                 validationSchema={LoginSchema}
-                onSubmit={(values, { resetForm }) => {
+                onSubmit={(values, { setSubmitting, resetForm }) => {
                   setTimeout(() => {
                     console.log(values)
+                    setSubmitting(false)
                     resetForm()
-                  }, 300)
+                  }, 500)
                 }}
               >
                 {({
@@ -59,7 +60,8 @@ const LoginMail = () => {
                   handleChange,
                   handleBlur,
                   handleSubmit,
-                  isValid
+                  isValid,
+                  isSubmitting
                 }) => (
                   <Form method="POST" noValidate onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
@@ -98,28 +100,27 @@ const LoginMail = () => {
                       <Form.Control.Feedback type="invalid">
                         {errors.password}
                       </Form.Control.Feedback>
+                      <small className="form-text float-right mb-4">
+                        <a href="#" className="text-decoration-none text-info">
+                          ¿Olvidaste tu contraseña?
+                        </a>
+                      </small>
                     </Form.Group>
-                    <div className="text-info float-right mb-4">
-                      <p>
-                        <small>
-                          <a href="#">¿Olvidaste tu contraseña?</a>
-                        </small>
-                      </p>
-                    </div>
+
                     <br />
-                    <div className="float-left mr-4 mb-4">
+                    <div className="float-left mr-4 my-5">
                       <Link to="/register" className="text-decoration-none">
                         <Button variant="link" type="submit">
                           Crear cuenta
                         </Button>
                       </Link>
                     </div>
-                    <div className="float-right ml-4 mb-4">
+                    <div className="float-right ml-4 my-5">
                       <Button
                         variant="primary"
                         type="submit"
                         className="px-3"
-                        disabled={!isValid}
+                        disabled={isSubmitting || !isValid}
                       >
                         Ingresar
                       </Button>

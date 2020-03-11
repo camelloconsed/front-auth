@@ -71,11 +71,12 @@ const SignIn = () => {
                     confirmPassword: ''
                   }}
                   validationSchema={RegisterSchema}
-                  onSubmit={(values, { resetForm }) => {
+                  onSubmit={(values, { setSubmitting, resetForm }) => {
                     setTimeout(() => {
                       console.log(values)
+                      setSubmitting(false)
                       resetForm()
-                    }, 300)
+                    }, 500)
                   }}
                 >
                   {({
@@ -85,7 +86,8 @@ const SignIn = () => {
                     handleChange,
                     handleBlur,
                     handleSubmit,
-                    isValid
+                    isValid,
+                    isSubmitting
                   }) => (
                     <Form method="POST" onSubmit={handleSubmit}>
                       <Form.Group controlId="formBasicName">
@@ -198,7 +200,7 @@ const SignIn = () => {
                           variant="primary"
                           type="submit"
                           className="px-3"
-                          disabled={!isValid}
+                          disabled={isSubmitting || !isValid}
                         >
                           Continuar
                         </Button>
