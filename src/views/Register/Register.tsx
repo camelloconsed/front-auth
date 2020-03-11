@@ -4,34 +4,35 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Logo from './logo-survi.png'
+import Messages from '../constants/errorMessages'
 
 const RegisterSchema = yup.object().shape({
   name: yup
     .string()
-    .min(3, 'El nombre debe tener mínimo 3 carácteres')
-    .max(30, 'El largo máximo es de 30 carácteres')
-    .required('El nombre es obligatorio'),
+    .min(3, Messages.nameMin)
+    .max(30, Messages.nameMax)
+    .required(Messages.nameRequired),
   lastName: yup
     .string()
-    .min(3, 'El apellido debe tener mínimo 3 carácteres')
-    .max(50, 'El largo máximo es de 50 carácteres')
-    .required('El apellido es obligatorio'),
+    .min(3, Messages.lastNameMin)
+    .max(50, Messages.lastNameMax)
+    .required(Messages.lastNameRequired),
   email: yup
     .string()
-    .email('Debes ingresar un correo válido')
-    .max(50, 'El largo máximo es de 50 carácteres')
-    .required('El correo es obligatorio'),
+    .email(Messages.email)
+    .max(50, Messages.emailMax)
+    .required(Messages.emailRequired),
   password: yup
     .string()
-    .min(8, 'La contraseña debe tener mínimo 8 carácteres')
-    .max(20, 'El largo máximo es de 20 carácteres')
-    .required('La contraseña es obligatoria'),
+    .min(8, Messages.passwordMin)
+    .max(20, Messages.passwordMax)
+    .required(Messages.passwordRequired),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password'), null], 'Las constraseñas deben coincidir')
-    .min(8, 'La contraseña debe tener mínimo 8 carácteres')
-    .max(20, 'El largo máximo es de 20 carácteres')
-    .required('La contraseña es obligatoria')
+    .oneOf([yup.ref('password'), null], Messages.passwordMatch)
+    .min(8, Messages.passwordMin)
+    .max(20, Messages.passwordMax)
+    .required(Messages.passwordRequired)
 })
 
 const SignIn = () => {
@@ -62,7 +63,13 @@ const SignIn = () => {
               </div>
               <div className="mx-4 clearfix">
                 <Formik
-                  initialValues={{ name: '', lastName: '', email: '', password: '', confirmPassword:'' }}
+                  initialValues={{
+                    name: '',
+                    lastName: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: ''
+                  }}
                   validationSchema={RegisterSchema}
                   onSubmit={(values, { resetForm }) => {
                     setTimeout(() => {

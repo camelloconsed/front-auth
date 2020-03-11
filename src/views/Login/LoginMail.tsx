@@ -4,18 +4,19 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Logo from './logo-survi.png'
+import Messages from '../constants/errorMessages'
 
 const LoginSchema = yup.object().shape({
   email: yup
     .string()
-    .email('Debes ingresar un correo válido')
-    .max(50, 'El largo máximo es de 50 carácteres')
-    .required('El correo es obligatorio'),
+    .email(Messages.email)
+    .max(50, Messages.emailMax)
+    .required(Messages.emailRequired),
   password: yup
     .string()
-    .min(8, 'La contraseña debe tener mínimo 8 carácteres')
-    .max(20, 'El largo máximo es de 20 carácteres')
-    .required('La contraseña es obligatoria')
+    .min(8, Messages.passwordMin)
+    .max(20, Messages.passwordMax)
+    .required(Messages.passwordRequired)
 })
 
 const LoginMail = () => {
