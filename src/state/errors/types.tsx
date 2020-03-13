@@ -1,0 +1,1 @@
+export const ERROR_UNAUTHORIZED: string = 'accessToken/ERROR_UNAUTHORIZED'

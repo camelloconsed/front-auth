@@ -34,7 +34,9 @@ const Login = () => {
               </div>
 
               <div className="mb-2 text-center">
-                <p className="text-decoration-none text-dark mb-2">¿No tienes cuenta?</p>
+                <a href="@" className="text-decoration-none text-dark">
+                  ¿No tienes cuenta?
+                </a>
               </div>
               <div className="mb-5">
                 <Link to="/register" className="text-decoration-none">

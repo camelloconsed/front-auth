@@ -1,21 +1,21 @@
-import { GET_BREEDS } from './types'
+import { ERROR_UNAUTHORIZED } from './types'
 
 const initialState = {
-  breeds: []
+  error: []
 }
 
 type State = typeof initialState
 type Action = {
   type: string
-  payload: Array<object>
+  payload: object
 }
 
 export default (state: State = initialState, action: Action) => {
   const { type, payload } = action
 
   switch (type) {
-    case GET_BREEDS:
-      return { ...state, breeds: payload }
+    case ERROR_UNAUTHORIZED:
+      return { ...state, error: payload }
     default:
       return state
   }

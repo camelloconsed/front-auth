@@ -4,7 +4,11 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Logo from './logo-survi.png'
-import Messages from '../../helpers/constants/errorMessages'
+import Messages from '../../config/constants/errorMessages'
+import { FETCH_TOKEN } from '../../state/accessToken/types'
+import { connect } from 'react-redux'
+import { getToken } from '../../network/accessToken'
+// import { TokenState } from '../../state/accessToken/reducer'
 
 const LoginSchema = yup.object().shape({
   email: yup
@@ -14,7 +18,7 @@ const LoginSchema = yup.object().shape({
     .required(Messages.emailRequired),
   password: yup
     .string()
-    .min(8, Messages.passwordMin)
+    .min(3, Messages.passwordMin)
     .max(20, Messages.passwordMax)
     .required(Messages.passwordRequired)
 })
@@ -55,12 +59,11 @@ const LoginMail = () => {
               <Formik
                 initialValues={{ email: '', password: '' }}
                 validationSchema={LoginSchema}
-                onSubmit={(values, { setSubmitting, resetForm }) => {
-                  setTimeout(() => {
+                onSubmit={(values, { setSubmitting }) => {
+                  getToken(values).then(() => {
                     console.log(values)
                     setSubmitting(false)
-                    resetForm()
-                  }, 500)
+                  })
                 }}
               >
                 {({
@@ -158,5 +161,12 @@ const LoginMail = () => {
     </Fragment>
   )
 }
+// const data = (state: TokenState) => ({
+//   token: state.token.token
+// })
 
-export default LoginMail
+const actions = (dispatch: (arg0: { type: string; payload: any }) => any) => ({
+  getToken: (credentials: any) => dispatch({ type: FETCH_TOKEN, payload: credentials })
+})
+
+export default connect(null, actions)(LoginMail)
