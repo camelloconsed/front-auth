@@ -10,7 +10,7 @@ const LoginSchema = yup.object().shape({
   email: yup
     .string()
     .email(Messages.email)
-    .max(50, Messages.emailMax)
+    .max(40, Messages.emailMax)
     .required(Messages.emailRequired),
   password: yup
     .string()

@@ -1,6 +1,6 @@
 const messages = {
   email: 'Debes ingresar un correo válido',
-  emailMax: 'El largo máximo es de 50 carácteres',
+  emailMax: 'El largo máximo es de 40 carácteres',
   emailRequired: 'El correo es obligatorio',
   passwordMin: 'La contraseña debe tener mínimo 8 carácteres',
   passwordMax: 'El largo máximo es de 20 carácteres',
