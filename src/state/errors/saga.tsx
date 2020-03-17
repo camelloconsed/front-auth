@@ -1,6 +1,6 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { getToken } from '../../network/accessToken'
-import { FETCH_TOKEN, GET_TOKEN } from './types'
+import { FETCH_ERROR, ERROR_UNAUTHORIZED } from './types'
 import { AnyAction } from 'redux'
 
 function* fetchToken(action: AnyAction) {
@@ -8,16 +8,14 @@ function* fetchToken(action: AnyAction) {
   try {
     const { data } = yield call(getToken, payload)
     const token = Object.keys(data.message)
-    yield put({ type: GET_TOKEN, payload: token })
+    yield put({ type: ERROR_UNAUTHORIZED, payload: token })
   } catch (err) {
     console.log(err)
-
-    // yield put({ type: FETCH_ERROR })
   }
 }
 
 function* watchFetchToken() {
-  yield takeLatest(FETCH_TOKEN, fetchToken)
+  yield takeLatest(FETCH_ERROR, fetchToken)
 }
 
 export default [watchFetchToken()]

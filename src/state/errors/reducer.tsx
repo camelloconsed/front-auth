@@ -1,7 +1,12 @@
 import { ERROR_UNAUTHORIZED } from './types'
 
 const initialState = {
-  error: []
+  error: {
+    code: '',
+    message: '',
+    payload: '',
+    resource: ''
+  }
 }
 
 type State = typeof initialState

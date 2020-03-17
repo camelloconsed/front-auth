@@ -7,7 +7,6 @@ import Logo from './logo-survi.png'
 import Messages from '../../config/constants/errorMessages'
 import { FETCH_TOKEN } from '../../state/accessToken/types'
 import { connect } from 'react-redux'
-import { getToken } from '../../network/accessToken'
 // import { TokenState } from '../../state/accessToken/reducer'
 
 const LoginSchema = yup.object().shape({
@@ -30,7 +29,10 @@ const onEmailChange = (
   const emailFormatted = e.target.value.trim()
   setFieldValue('email', emailFormatted, false)
 }
-const LoginMail = () => {
+
+const LoginMail = (props: {
+  getToken: (arg0: { email: string; password: string }) => any
+}) => {
   const [shown, setShown] = useState(false)
   const switchShown = () => setShown(!shown)
 
@@ -60,10 +62,8 @@ const LoginMail = () => {
                 initialValues={{ email: '', password: '' }}
                 validationSchema={LoginSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                  getToken(values).then(() => {
-                    console.log(values)
-                    setSubmitting(false)
-                  })
+                  props.getToken(values)
+                  setSubmitting(false)
                 }}
               >
                 {({
@@ -167,6 +167,7 @@ const LoginMail = () => {
 
 const actions = (dispatch: (arg0: { type: string; payload: any }) => any) => ({
   getToken: (credentials: any) => dispatch({ type: FETCH_TOKEN, payload: credentials })
+  // getErrors: () => dispatch({type: FETCH_ERROR, payload})
 })
 
 export default connect(null, actions)(LoginMail)

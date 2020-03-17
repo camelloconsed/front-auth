@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { network } from '../config'
 import Cookies from 'js-cookie'
-import { ERROR_UNAUTHORIZED } from '../state/errors/types'
 
 export const getToken = async (credentials: { email: string; password: string }) => {
   const request = {
@@ -20,7 +19,7 @@ export const getToken = async (credentials: { email: string; password: string })
   }
   if (response.status !== 201) {
     console.log(response)
-    return null
+    return response
   }
 
   Cookies.set('token', response.data.access_token, { domain: network.cookieHost })
