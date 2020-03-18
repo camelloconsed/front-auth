@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Logo from './logo-survi.png'
-import Messages from '../../config/constants/errorMessages'
+import Messages from '../../helpers/constants/errorMessages'
 
 const RegisterSchema = yup.object().shape({
   name: yup

@@ -14,12 +14,13 @@ export const getToken = async (credentials: { email: string; password: string })
   const response = await axios
     .post(`${network.baseUrl}/oauth/token`, request)
     .catch(err => err)
+    console.log(response)
   if (response.status === 401) {
     //dispatch error
   }
   if (response.status !== 201) {
-    console.log(response)
-    return response
+    // console.log(response)
+    return null
   }
 
   Cookies.set('token', response.data.access_token, { domain: network.cookieHost })
