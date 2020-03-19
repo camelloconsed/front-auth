@@ -10,7 +10,7 @@ const Login = () => {
       <Row>
         <Col xs={6}></Col>
         <Col xs={6} className="bg-white">
-          <div className="mt-5 w-50 vh-100 d-flex flex-column">
+          <div className="mt-5 w-75 vh-100 d-flex flex-column">
             <div className="mt-5 ml-5">
               {/*This logo is not official, I need the logo in svg*/}
               <Image src={Logo} />
@@ -34,9 +34,7 @@ const Login = () => {
               </div>
 
               <div className="mb-2 text-center">
-                <a href="#" className="text-decoration-none text-dark">
-                  ¿No tienes cuenta?
-                </a>
+                <p className="text-decoration-none text-dark mb-2">¿No tienes cuenta?</p>
               </div>
               <div className="mb-5">
                 <Link to="/register" className="text-decoration-none">
