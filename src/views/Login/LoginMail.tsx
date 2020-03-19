@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Logo from './logo-survi.png'
-import Messages from '../constants/errorMessages'
+import Messages from '../../helpers/constants/errorMessages'
 
 const LoginSchema = yup.object().shape({
   email: yup
@@ -19,6 +19,13 @@ const LoginSchema = yup.object().shape({
     .required(Messages.passwordRequired)
 })
 
+const onEmailChange = (
+  e: { target: { value: string } },
+  setFieldValue: (arg0: string, arg1: any, arg2: boolean) => void
+) => {
+  const newValue = e.target.value.trim()
+  setFieldValue('email', newValue, false)
+}
 const LoginMail = () => {
   const [shown, setShown] = useState(false)
   const switchShown = () => setShown(!shown)
@@ -64,7 +71,8 @@ const LoginMail = () => {
                   handleBlur,
                   handleSubmit,
                   isValid,
-                  isSubmitting
+                  isSubmitting,
+                  setFieldValue
                 }) => (
                   <Form method="POST" noValidate onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
@@ -72,10 +80,14 @@ const LoginMail = () => {
                         <strong>CORREO ELECTRÓNICO</strong>
                       </Form.Label>
                       <Form.Control
-                        type="email"
+                        type="text"
                         name="email"
                         placeholder="Ingresa tu correo electrónico"
-                        onChange={handleChange}
+                        onChange={(e: any) => {
+                          onEmailChange(e, setFieldValue)
+                          console.log(e.target.value);
+                          
+                        }}
                         onBlur={handleBlur}
                         value={values.email}
                         isValid={touched.email && !errors.email}
