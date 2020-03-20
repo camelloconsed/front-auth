@@ -5,12 +5,17 @@ import { Container, Col, Navbar, Row, Image, Button } from 'react-bootstrap'
 import Logo from './../../images/logo-survi.png'
 import SuccessImg from './../../images/success-password.svg'
 
-const RecoverPassword = () => {
+const UseBodyWhite = () => {
+  return (document.body.style.backgroundColor = '#fff')
+}
+
+const SuccessPasword = () => {
+  UseBodyWhite()
   return (
     <Fragment>
-      <Navbar bg="white" variant="light">
+      <Navbar bg="white" variant="light" className="shadow-sm">
         <Navbar.Brand>
-          <Image src={Logo} width="160" height="30" />
+          <Image src={Logo} width="160" height="24" />
         </Navbar.Brand>
       </Navbar>
       <Container>
@@ -27,4 +32,4 @@ const RecoverPassword = () => {
   )
 }
 
-export default RecoverPassword
+export default SuccessPasword
