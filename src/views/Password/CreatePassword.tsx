@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
-import { Container, Col, Navbar, Button, Row, Image, Card, Form } from 'react-bootstrap'
-// import { Link } from 'react-router-dom'
+import { Container, Col, Navbar, Row, Image, Card, Form } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 import Logo from './../../images/logo-survi.png'
 
@@ -47,9 +47,9 @@ const RecoverPassword = () => {
                   </Form.Row>
                   <Form.Row>
                     <Col sm="8" className="col-sm-8 mx-auto">
-                      <Button variant="primary" className="btn-block">
+                      <Link to="/successpassword" className="btn btn-primary btn-block">
                         Crear contraseña
-                      </Button>
+                      </Link>
                     </Col>
                   </Form.Row>
                 </Form>
