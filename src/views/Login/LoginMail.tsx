@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Col, Navbar, Button, Row, Image, Card, Form } from 'react-bootstrap'
 import { Formik } from 'formik'
 import * as yup from 'yup'
@@ -20,6 +20,9 @@ const LoginSchema = yup.object().shape({
 })
 
 const LoginMail = () => {
+  const [shown, setShown] = useState(false)
+  const switchShown = () => setShown(!shown)
+
   return (
     <Fragment>
       <Row className="bg-white">
@@ -88,7 +91,7 @@ const LoginMail = () => {
                         <strong>CONTRASEÑA</strong>
                       </Form.Label>
                       <Form.Control
-                        type="password"
+                        type={shown ? 'text' : 'password'}
                         name="password"
                         placeholder="Ingresa tu contraseña"
                         onChange={handleChange}
@@ -97,6 +100,13 @@ const LoginMail = () => {
                         isValid={touched.password && !errors.password}
                         isInvalid={touched.password && !!errors.password}
                       />
+                      <span className="field-icon text-muted" onClick={switchShown}>
+                        {shown ? (
+                          <i className="fas fa-eye-slash"></i>
+                        ) : (
+                          <i className="fas fa-eye"></i>
+                        )}
+                      </span>
                       <Form.Control.Feedback type="invalid">
                         {errors.password}
                       </Form.Control.Feedback>
