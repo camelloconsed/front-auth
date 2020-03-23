@@ -21,10 +21,10 @@ const LoginSchema = yup.object().shape({
 
 const onEmailChange = (
   e: { target: { value: string } },
-  setFieldValue: (arg0: string, arg1: any, arg2: boolean) => void
+  setFieldValue: (field: string, value: any, shouldValidate: boolean) => void
 ) => {
-  const newValue = e.target.value.trim()
-  setFieldValue('email', newValue, false)
+  const emailFormatted = e.target.value.trim()
+  setFieldValue('email', emailFormatted, false)
 }
 const LoginMail = () => {
   const [shown, setShown] = useState(false)
@@ -85,8 +85,6 @@ const LoginMail = () => {
                         placeholder="Ingresa tu correo electrónico"
                         onChange={(e: any) => {
                           onEmailChange(e, setFieldValue)
-                          console.log(e.target.value);
-                          
                         }}
                         onBlur={handleBlur}
                         value={values.email}
