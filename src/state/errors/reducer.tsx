@@ -1,11 +1,11 @@
-import { ERROR_UNAUTHORIZED } from './types'
+import { ERROR_UNAUTHORIZED, ERROR_BAD_REQUEST } from './types'
 
 const initialState = {
   error: {
-    code: '',
-    message: '',
-    payload: '',
-    resource: ''
+    // code: '',
+    // message: '',
+    // payload: '',
+    // resource: ''
   }
 }
 
@@ -18,9 +18,14 @@ type Action = {
 export default (state: State = initialState, action: Action) => {
   const { type, payload } = action
 
-  switch (type) {
+  switch (action.type) {
     case ERROR_UNAUTHORIZED:
+      const payload = action.payload
+      console.log(payload)
+
       return { ...state, error: payload }
+    // case ERROR_BAD_REQUEST:
+    //   return { ...state, error: payload }
     default:
       return state
   }
