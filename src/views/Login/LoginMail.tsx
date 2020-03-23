@@ -121,9 +121,12 @@ const LoginMail = () => {
                         {errors.password}
                       </Form.Control.Feedback>
                       <small className="form-text float-right mb-4">
-                        <a href="#" className="text-decoration-none text-info">
+                        <Link
+                          to="/recoverpassword"
+                          className="text-decoration-none text-info"
+                        >
                           ¿Olvidaste tu contraseña?
-                        </a>
+                        </Link>
                       </small>
                     </Form.Group>
 
