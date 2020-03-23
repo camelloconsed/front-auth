@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import { Container, Col, Navbar, Row, Image, Button } from 'react-bootstrap'
-// import { Link } from 'react-router-dom'
 
 import Logo from './../../images/logo-survi.png'
 import SuccessImg from './../../images/success-password.svg'
