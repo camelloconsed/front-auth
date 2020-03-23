@@ -1,11 +1,23 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Environment variables
+
+- `REACT_APP_SERVICES_URL`: The auth service host.
+- `REACT_APP_SERVICES_PORT`: The auth service port.
+
+- `DOCKER_PORT`: The port of application to expose by docker.
+
+For production:
+
+- `DOCKER_IMAGE`: The image name to push into registry.
+
 ## Installation
+
 Run
+
 ```
 $ npm run install-dev
 ```
-
 
 ## Available Scripts
 

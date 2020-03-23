@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Col, Navbar, Button, Row, Image, Card, Form } from 'react-bootstrap'
 import { Formik } from 'formik'
 import * as yup from 'yup'
@@ -36,6 +36,12 @@ const RegisterSchema = yup.object().shape({
 })
 
 const SignIn = () => {
+  const [shown, setShown] = useState(false)
+  const switchShown = () => setShown(!shown)
+  
+  const [shown1, setShown1] = useState(false)
+  const switchShown1 = () => setShown1(!shown1)
+
   return (
     <Fragment>
       <Row className="bg-white">
@@ -152,7 +158,7 @@ const SignIn = () => {
                           <strong>CONTRASEÑA</strong>
                         </Form.Label>
                         <Form.Control
-                          type="password"
+                          type={shown ? 'text' : 'password'}
                           name="password"
                           placeholder="Crea tu contraseña"
                           onChange={handleChange}
@@ -161,6 +167,13 @@ const SignIn = () => {
                           isValid={touched.password && !errors.password}
                           isInvalid={touched.password && !!errors.password}
                         />
+                        <span className="field-icon text-muted" onClick={switchShown}>
+                          {shown ? (
+                            <i className="fas fa-eye-slash"></i>
+                          ) : (
+                            <i className="fas fa-eye"></i>
+                          )}
+                        </span>
                         <Form.Control.Feedback type="invalid">
                           {errors.password}
                         </Form.Control.Feedback>
@@ -174,7 +187,7 @@ const SignIn = () => {
                           <strong>CONTRASEÑA</strong>
                         </Form.Label>
                         <Form.Control
-                          type="password"
+                          type={shown1 ? 'text' : 'password'}
                           name="confirmPassword"
                           placeholder="Repite tu contraseña"
                           onChange={handleChange}
@@ -183,6 +196,13 @@ const SignIn = () => {
                           isValid={touched.confirmPassword && !errors.confirmPassword}
                           isInvalid={touched.confirmPassword && !!errors.confirmPassword}
                         />
+                        <span className="field-icon text-muted" onClick={switchShown1}>
+                          {shown1 ? (
+                            <i className="fas fa-eye-slash"></i>
+                          ) : (
+                            <i className="fas fa-eye"></i>
+                          )}
+                        </span>
                         <Form.Control.Feedback type="invalid">
                           {errors.confirmPassword}
                         </Form.Control.Feedback>
