@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - `REACT_APP_SERVICES_URL`: The auth service host.
 - `REACT_APP_SERVICES_PORT`: The auth service port.
+- `REACT_APP_CLIENT_ID`: Oauth client credentials.
+- `REACT_APP_CLIENT_SECRET`: Oauth client credentials.
+- `REACT_APP_REDIRECT_URL`: The callback url to redirect after login.
+- `REACT_APP_COOKIE_HOST`: The host that store the cookie.
 
 - `DOCKER_PORT`: The port of application to expose by docker.
 
