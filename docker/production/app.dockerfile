@@ -2,7 +2,7 @@ FROM node:10 as build
 
 WORKDIR /usr/src/app
 
-COPY package.json ./
+COPY package*.json ./
 RUN npm install --silent
 RUN npm install react-scripts@3.0.1 -g --silent
 
