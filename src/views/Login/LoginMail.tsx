@@ -7,7 +7,10 @@ import Logo from './logo-survi.png'
 import Messages from '../../helpers/constants/errorMessages'
 import { FETCH_TOKEN } from '../../state/accessToken/types'
 import { connect } from 'react-redux'
-// import { TokenState } from '../../state/accessToken/reducer'
+import { Errors } from '../../state/errors/reducer'
+import errorCodes from '../../helpers/constants/errorCodes'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const LoginSchema = yup.object().shape({
   email: yup
@@ -17,10 +20,11 @@ const LoginSchema = yup.object().shape({
     .required(Messages.emailRequired),
   password: yup
     .string()
-    .min(3, Messages.passwordMin)
+    .min(8, Messages.passwordMin)
     .max(20, Messages.passwordMax)
     .required(Messages.passwordRequired)
 })
+toast.configure()
 
 const onEmailChange = (
   e: { target: { value: string } },
@@ -30,11 +34,34 @@ const onEmailChange = (
   setFieldValue('email', emailFormatted, false)
 }
 
-const LoginMail = (props: {
-  getToken: (arg0: { email: string; password: string }) => any
-}) => {
+const LoginMail: React.FC<React.ComponentState> = props => {
   const [shown, setShown] = useState(false)
   const switchShown = () => setShown(!shown)
+  const hasError = props.error.error.error
+
+  const invalidError = () => {
+    toast.error('Correo o email incorrectos', {
+      position: 'top-center',
+      autoClose: 3500
+    })
+  }
+  const internalError = () => {
+    toast.error('Error interno del servidor', {
+      position: 'top-center',
+      autoClose: 3500
+    })
+  }
+
+  switch (hasError) {
+    case errorCodes.INVALID_CREDENTIALS:
+      invalidError()
+      break
+    case errorCodes.INTERNAL_ERROR:
+      internalError()
+      break
+    default:
+      break
+  }
 
   return (
     <Fragment>
@@ -161,13 +188,13 @@ const LoginMail = (props: {
     </Fragment>
   )
 }
-// const data = (state: TokenState) => ({
-//   token: state.token.token
-// })
+
+const data = (state: Errors) => ({
+  error: state.error
+})
 
 const actions = (dispatch: (arg0: { type: string; payload: any }) => any) => ({
   getToken: (credentials: any) => dispatch({ type: FETCH_TOKEN, payload: credentials })
-  // getErrors: () => dispatch({type: FETCH_ERROR, payload})
 })
 
-export default connect(null, actions)(LoginMail)
+export default connect(data, actions)(LoginMail)

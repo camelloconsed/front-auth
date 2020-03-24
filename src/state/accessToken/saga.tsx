@@ -1,24 +1,34 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { getToken } from '../../network/accessToken'
 import { FETCH_TOKEN, GET_TOKEN } from './types'
-import { ERROR_UNAUTHORIZED, ERROR_BAD_REQUEST } from '../errors/types'
+import { ERROR_UNAUTHORIZED, ERROR_BAD_REQUEST, ERROR_SERVER } from '../errors/types'
 import { AnyAction } from 'redux'
+import Cookies from 'js-cookie'
+import { network } from '../../config'
 
 function* fetchToken(action: AnyAction) {
   const { payload } = action
-  const data = yield call(getToken, payload)
-  console.log(data.status)
-
-  const status = data.status
-  switch (status) {
-    case '400':
-      yield put({ type: ERROR_BAD_REQUEST, payload: status })
-      break
-    case '401':
-      yield put({ type: ERROR_UNAUTHORIZED, payload: status })
-    case '201':
-      yield put({ type: GET_TOKEN, payload: status })
-      break
+  try {
+    const response = yield call(getToken, payload)
+    Cookies.set('token', response.data.access_token, { domain: network.cookieHost })
+    Cookies.set('ref_token', response.data.refresh_token, { domain: network.cookieHost })
+    yield put({ type: GET_TOKEN, payload })
+  } catch (error) {
+    const { status } = error.response
+    const errorResponse = error.response.data
+    switch (status) {
+      case 400:
+        yield put({ type: ERROR_BAD_REQUEST, payload: errorResponse })
+        break
+      case 401:
+        yield put({ type: ERROR_UNAUTHORIZED, payload: errorResponse })
+        break
+      case 500:
+        yield put({ type: ERROR_SERVER, payload: errorResponse })
+        break
+      default:
+        break
+    }
   }
 }
 
@@ -27,17 +37,3 @@ function* watchFetchToken() {
 }
 
 export default [watchFetchToken()]
-
-// switch (status) {
-//   case 201:
-//     yield put({ type: GET_TOKEN, payload: status })
-//     // console.log(payload.status)
-//     console.log(status)
-//     break
-//   case 401:
-//     yield put({ type: ERROR_UNAUTHORIZED, payload: status })
-//     console.log(status)
-//     break
-//   case 400:
-//     yield put({ type: ERROR_BAD_REQUEST, payload: status })
-// }

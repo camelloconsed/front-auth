@@ -15,6 +15,7 @@ export default (state: State = initialState, action: Action) => {
 
   switch (type) {
     case GET_TOKEN:
+      console.log(payload)
       return { ...state, token: payload }
     default:
       return state
