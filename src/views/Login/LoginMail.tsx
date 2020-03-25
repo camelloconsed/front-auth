@@ -24,7 +24,8 @@ const LoginSchema = yup.object().shape({
     .max(20, Messages.passwordMax)
     .required(Messages.passwordRequired)
 })
-toast.configure()
+
+toast.configure({ position: 'top-center', autoClose: 3500 })
 
 const onEmailChange = (
   e: { target: { value: string } },
@@ -39,25 +40,12 @@ const LoginMail: React.FC<React.ComponentState> = props => {
   const switchShown = () => setShown(!shown)
   const hasError = props.error.error.error
 
-  const invalidError = () => {
-    toast.error('Correo o email incorrectos', {
-      position: 'top-center',
-      autoClose: 3500
-    })
-  }
-  const internalError = () => {
-    toast.error('Error interno del servidor', {
-      position: 'top-center',
-      autoClose: 3500
-    })
-  }
-
   switch (hasError) {
     case errorCodes.INVALID_CREDENTIALS:
-      invalidError()
+      toast.error('Correo o email incorrectos')
       break
     case errorCodes.INTERNAL_ERROR:
-      internalError()
+      toast.error('Error interno del servidor')
       break
     default:
       break
