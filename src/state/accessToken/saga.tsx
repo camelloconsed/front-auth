@@ -1,7 +1,7 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { getToken } from '../../network/accessToken'
 import { FETCH_TOKEN, GET_TOKEN } from './types'
-import { ERROR_UNAUTHORIZED, ERROR_BAD_REQUEST, ERROR_SERVER } from '../errors/types'
+import { ERROR_UNAUTHORIZED, ERROR_BAD_REQUEST, ERROR_SERVER, CLEAR_ERROR } from '../errors/types'
 import { AnyAction } from 'redux'
 import Cookies from 'js-cookie'
 import { network } from '../../config'
@@ -13,6 +13,7 @@ function* fetchToken(action: AnyAction) {
     Cookies.set('token', response.data.access_token, { domain: network.cookieHost })
     Cookies.set('ref_token', response.data.refresh_token, { domain: network.cookieHost })
     yield put({ type: GET_TOKEN, payload })
+    yield put({ type: CLEAR_ERROR, payload })
   } catch (error) {
     const { status } = error.response
     const errorResponse = error.response.data
