@@ -10,5 +10,6 @@ services:
     command: npm start
     volumes:
       - ../:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - "${DOCKER_PORT}:3000"

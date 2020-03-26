@@ -4,19 +4,25 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Logo from './logo-survi.png'
-import Messages from '../../helpers/constants/errorMessages'
+import ValidationMessages from '../../helpers/constants/validationMessages'
+import ErrorMessages from '../../helpers/constants/errorMessages'
+import { FETCH_TOKEN } from '../../state/accessToken/types'
+import { CLEAR_ERROR } from '../../state/errors/types'
+import { connect } from 'react-redux'
+import { Errors } from '../../state/errors/reducer'
+import ErrorCodes from '../../helpers/constants/errorCodes'
 
 const LoginSchema = yup.object().shape({
   email: yup
     .string()
-    .email(Messages.email)
-    .max(40, Messages.emailMax)
-    .required(Messages.emailRequired),
+    .email(ValidationMessages.email)
+    .max(40, ValidationMessages.emailMax)
+    .required(ValidationMessages.emailRequired),
   password: yup
     .string()
-    .min(8, Messages.passwordMin)
-    .max(20, Messages.passwordMax)
-    .required(Messages.passwordRequired)
+    .min(8, ValidationMessages.passwordMin)
+    .max(20, ValidationMessages.passwordMax)
+    .required(ValidationMessages.passwordRequired)
 })
 
 const onEmailChange = (
@@ -26,9 +32,11 @@ const onEmailChange = (
   const emailFormatted = e.target.value.trim()
   setFieldValue('email', emailFormatted, false)
 }
-const LoginMail = () => {
+
+const LoginMail: React.FC<React.ComponentState> = props => {
   const [shown, setShown] = useState(false)
   const switchShown = () => setShown(!shown)
+  const hasError = props.error.error.error
 
   return (
     <Fragment>
@@ -55,12 +63,9 @@ const LoginMail = () => {
               <Formik
                 initialValues={{ email: '', password: '' }}
                 validationSchema={LoginSchema}
-                onSubmit={(values, { setSubmitting, resetForm }) => {
-                  setTimeout(() => {
-                    console.log(values)
-                    setSubmitting(false)
-                    resetForm()
-                  }, 500)
+                onSubmit={(values, { setSubmitting }) => {
+                  props.getToken(values)
+                  setSubmitting(false)
                 }}
               >
                 {({
@@ -84,12 +89,14 @@ const LoginMail = () => {
                         name="email"
                         placeholder="Ingresa tu correo electrónico"
                         onChange={(e: any) => {
+                          handleChange(e)
                           onEmailChange(e, setFieldValue)
+                          props.clearError()
                         }}
                         onBlur={handleBlur}
                         value={values.email}
                         isValid={touched.email && !errors.email}
-                        isInvalid={touched.email && !!errors.email}
+                        isInvalid={touched.email && (!!errors.email || !!hasError)}
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.email}
@@ -104,11 +111,14 @@ const LoginMail = () => {
                         type={shown ? 'text' : 'password'}
                         name="password"
                         placeholder="Ingresa tu contraseña"
-                        onChange={handleChange}
+                        onChange={(e: any) => {
+                          handleChange(e)
+                          props.clearError()
+                        }}
                         onBlur={handleBlur}
                         value={values.password}
                         isValid={touched.password && !errors.password}
-                        isInvalid={touched.password && !!errors.password}
+                        isInvalid={touched.password && (!!errors.password || !!hasError)}
                       />
                       <span className="field-icon text-muted" onClick={switchShown}>
                         {shown ? (
@@ -118,7 +128,7 @@ const LoginMail = () => {
                         )}
                       </span>
                       <Form.Control.Feedback type="invalid">
-                        {errors.password}
+                        {errors.password || ErrorMessages(hasError)}
                       </Form.Control.Feedback>
                       <small className="form-text float-right mb-4">
                         <Link
@@ -159,4 +169,13 @@ const LoginMail = () => {
   )
 }
 
-export default LoginMail
+const data = (state: Errors) => ({
+  error: state.error
+})
+
+const actions = (dispatch: (action: { type: string; payload: any }) => any) => ({
+  getToken: (credentials: any) => dispatch({ type: FETCH_TOKEN, payload: credentials }),
+  clearError: () => dispatch({type: CLEAR_ERROR, payload: null})
+})
+
+export default connect(data, actions)(LoginMail)

@@ -4,35 +4,35 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Logo from './logo-survi.png'
-import Messages from '../../helpers/constants/errorMessages'
+import ValidationMessages from '../../helpers/constants/validationMessages'
 
 const RegisterSchema = yup.object().shape({
   name: yup
     .string()
-    .min(3, Messages.nameMin)
-    .max(30, Messages.nameMax)
-    .required(Messages.nameRequired),
+    .min(3, ValidationMessages.nameMin)
+    .max(30, ValidationMessages.nameMax)
+    .required(ValidationMessages.nameRequired),
   lastName: yup
     .string()
-    .min(3, Messages.lastNameMin)
-    .max(50, Messages.lastNameMax)
-    .required(Messages.lastNameRequired),
+    .min(3, ValidationMessages.lastNameMin)
+    .max(50, ValidationMessages.lastNameMax)
+    .required(ValidationMessages.lastNameRequired),
   email: yup
     .string()
-    .email(Messages.email)
-    .max(40, Messages.emailMax)
-    .required(Messages.emailRequired),
+    .email(ValidationMessages.email)
+    .max(40, ValidationMessages.emailMax)
+    .required(ValidationMessages.emailRequired),
   password: yup
     .string()
-    .min(8, Messages.passwordMin)
-    .max(20, Messages.passwordMax)
-    .required(Messages.passwordRequired),
+    .min(8, ValidationMessages.passwordMin)
+    .max(20, ValidationMessages.passwordMax)
+    .required(ValidationMessages.passwordRequired),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password'), null], Messages.passwordMatch)
-    .min(8, Messages.passwordMin)
-    .max(20, Messages.passwordMax)
-    .required(Messages.passwordRequired)
+    .oneOf([yup.ref('password'), null], ValidationMessages.passwordMatch)
+    .min(8, ValidationMessages.passwordMin)
+    .max(20, ValidationMessages.passwordMax)
+    .required(ValidationMessages.passwordRequired)
 })
 
 const onEmailChange = (
@@ -46,7 +46,7 @@ const onEmailChange = (
 const SignIn = () => {
   const [shown, setShown] = useState(false)
   const switchShown = () => setShown(!shown)
-  
+
   const [shown1, setShown1] = useState(false)
   const switchShown1 = () => setShown1(!shown1)
 

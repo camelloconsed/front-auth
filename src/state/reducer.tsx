@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
-import example from './example/reducer'
+import token from './accessToken/reducer'
+import error from './errors/reducer'
 
-export default combineReducers({ example })
+export default combineReducers({ token, error })
