@@ -1,4 +1,4 @@
-import { ERROR_UNAUTHORIZED, ERROR_BAD_REQUEST, ERROR_SERVER, CLEAR_ERROR } from './types'
+import { ERROR_UNAUTHORIZED, ERROR_BAD_REQUEST, ERROR_SERVER, UNKNOWN_ERROR, CLEAR_ERROR } from './types'
 
 const initialState = {
   error: {
@@ -30,6 +30,8 @@ export default (state: State = initialState, action: Action) => {
       return { ...state, error: payload }
     case ERROR_SERVER:
       return { ...state, error: payload }
+    case UNKNOWN_ERROR:
+      return {...state, error: payload}
     case CLEAR_ERROR:
       return initialState
     default:

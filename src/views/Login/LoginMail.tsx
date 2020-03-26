@@ -173,7 +173,7 @@ const data = (state: Errors) => ({
   error: state.error
 })
 
-const actions = (dispatch: (arg0: { type: string; payload: any }) => any) => ({
+const actions = (dispatch: (action: { type: string; payload: any }) => any) => ({
   getToken: (credentials: any) => dispatch({ type: FETCH_TOKEN, payload: credentials }),
   clearError: () => dispatch({type: CLEAR_ERROR, payload: null})
 })

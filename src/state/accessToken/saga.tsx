@@ -1,7 +1,13 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { getToken } from '../../network/accessToken'
 import { FETCH_TOKEN, GET_TOKEN } from './types'
-import { ERROR_UNAUTHORIZED, ERROR_BAD_REQUEST, ERROR_SERVER, CLEAR_ERROR } from '../errors/types'
+import {
+  ERROR_UNAUTHORIZED,
+  ERROR_BAD_REQUEST,
+  ERROR_SERVER,
+  UNKNOWN_ERROR,
+  CLEAR_ERROR
+} from '../errors/types'
 import { AnyAction } from 'redux'
 import Cookies from 'js-cookie'
 import { network } from '../../config'
@@ -28,6 +34,7 @@ function* fetchToken(action: AnyAction) {
         yield put({ type: ERROR_SERVER, payload: errorResponse })
         break
       default:
+        yield put({ type: UNKNOWN_ERROR, payload: errorResponse })
         break
     }
   }
