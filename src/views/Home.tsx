@@ -20,7 +20,7 @@ const Home: React.FC = () => {
       <Route path="/register">
         <Register />
       </Route>
-      <Route path="/recoverpassword">
+      <Route path="/password/forgot">
         <RecoverPassword />
       </Route>
       <Route path="/createpassword">

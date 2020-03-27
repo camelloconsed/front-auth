@@ -10,7 +10,6 @@ import { FETCH_TOKEN } from '../../state/accessToken/types'
 import { CLEAR_ERROR } from '../../state/errors/types'
 import { connect } from 'react-redux'
 import { Errors } from '../../state/errors/reducer'
-import ErrorCodes from '../../helpers/constants/errorCodes'
 
 const LoginSchema = yup.object().shape({
   email: yup
@@ -132,7 +131,7 @@ const LoginMail: React.FC<React.ComponentState> = props => {
                       </Form.Control.Feedback>
                       <small className="form-text float-right mb-4">
                         <Link
-                          to="/recoverpassword"
+                          to="/password/forgot"
                           className="text-decoration-none text-info"
                         >
                           ¿Olvidaste tu contraseña?
