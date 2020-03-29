@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import {
@@ -10,10 +11,16 @@ import {
   Card,
   Form,
   Alert,
-  Button
+  Button,
+  Spinner
 } from 'react-bootstrap'
+import {
+  FETCH_FORGOT_PASSWORD,
+  GET_FORGOT_PASSWORD_STATUS
+} from '../../state/password/types'
 import Logo from './../../images/logo-survi.png'
 import ValidationMessages from '../../helpers/constants/validationMessages'
+import { PASSWORD } from '../../config/constants'
 
 const forgotPasswordSchema = yup.object().shape({
   email: yup
@@ -31,19 +38,34 @@ const emailHandleChange = (
   setFieldValue('email', emailFormatted, false)
 }
 
-const displayAlert = (status: boolean) => {
-  if (status) {
-    return (
-    <Alert variant="success" dismissible>
-      <p className="mb-0">El enlace fue enviado con éxito</p>
-    </Alert>
-    )
+const displayAlert = (emailStatus: number, resetEmailStatus: any) => {
+  switch (emailStatus) {
+    case PASSWORD.EMAIL_STATUS.SUCCESS:
+      return (
+        <Alert variant="success" onClose={()=> resetEmailStatus()} dismissible>
+          <p className="mb-0">El enlace fue enviado con éxito</p>
+        </Alert>
+      )
+    case PASSWORD.EMAIL_STATUS.ERROR:
+      // TODO: error message by error code
+      return (
+        <Alert variant="danger" onClose={()=> resetEmailStatus()} dismissible>
+          <p className="mb-0">Error al enviar el correo</p>
+        </Alert>
+      )
+  }
+}
+
+const displayLoader = (emailStatus: number) => {
+  if (emailStatus === PASSWORD.EMAIL_STATUS.WAITING) {
+    return <Spinner className="ml-3" animation="border" size="sm" />
   }
 }
 
 const disableAutoComplete = () => <input type="email" name="email" style={{display: 'none'}} />
 
-const RecoverPassword = () => {
+const RecoverPassword: React.FC<React.ComponentState> = props => {
+  const { emailStatus, forgotPassword, resetEmailStatus } = props
   return (
     <Fragment>
       <Navbar bg="white" variant="light" className="shadow-sm">
@@ -55,16 +77,15 @@ const RecoverPassword = () => {
         <Row className="mt-4">
           <Col sm="6" className="mx-auto">
 
-            { displayAlert(true) }
+            { displayAlert(emailStatus, resetEmailStatus) }
 
             <Card className="shadow-sm border-0">
               <Card.Body className="py-5">
                 <Formik
                   initialValues={{ email: '' }}
                   validationSchema={forgotPasswordSchema}
-                  onSubmit={(values, { setSubmitting }) => {
-                    // TODO: dispatch forgot password
-                    setSubmitting(false)
+                  onSubmit={values => {
+                    forgotPassword(values.email)
                   }}
                 >
                   {({
@@ -75,7 +96,6 @@ const RecoverPassword = () => {
                     handleBlur,
                     handleSubmit,
                     isValid,
-                    isSubmitting,
                     setFieldValue
                   }) => (
                     <Form method="POST" autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -113,9 +133,10 @@ const RecoverPassword = () => {
                             variant="primary"
                             type="submit"
                             className="btn-block"
-                            disabled={isSubmitting || !isValid}
+                            disabled={emailStatus === PASSWORD.EMAIL_STATUS.WAITING || !isValid}
                           >
                             Enviar enlace
+                            { displayLoader(emailStatus) }
                           </Button>
                         </Col>
                       </Form.Row>
@@ -132,4 +153,17 @@ const RecoverPassword = () => {
   )
 }
 
-export default RecoverPassword
+const stateToProps = (state: { password: { emailStatus: number }}) => ({
+  emailStatus: state.password.emailStatus
+})
+
+const actions = (dispatch: (action: { type: string; payload: any }) => any) => ({
+  forgotPassword: (email: string) => dispatch({
+    type: FETCH_FORGOT_PASSWORD, payload: email
+  }),
+  resetEmailStatus: () => dispatch({
+    type: GET_FORGOT_PASSWORD_STATUS, payload: PASSWORD.EMAIL_STATUS.NONE
+  })
+})
+
+export default connect(stateToProps, actions)(RecoverPassword)
