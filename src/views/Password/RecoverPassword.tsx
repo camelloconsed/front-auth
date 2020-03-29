@@ -38,7 +38,7 @@ const emailHandleChange = (
   setFieldValue('email', emailFormatted, false)
 }
 
-const displayAlert = (emailStatus: number, resetEmailStatus: any) => {
+const displayAlert = (emailStatus: number, message:string, resetEmailStatus: any) => {
   switch (emailStatus) {
     case PASSWORD.EMAIL_STATUS.SUCCESS:
       return (
@@ -47,10 +47,9 @@ const displayAlert = (emailStatus: number, resetEmailStatus: any) => {
         </Alert>
       )
     case PASSWORD.EMAIL_STATUS.ERROR:
-      // TODO: error message by error code
       return (
         <Alert variant="danger" onClose={()=> resetEmailStatus()} dismissible>
-          <p className="mb-0">Error al enviar el correo</p>
+          <p className="mb-0">{message}</p>
         </Alert>
       )
   }
@@ -65,7 +64,12 @@ const displayLoader = (emailStatus: number) => {
 const disableAutoComplete = () => <input type="email" name="email" style={{display: 'none'}} />
 
 const RecoverPassword: React.FC<React.ComponentState> = props => {
-  const { emailStatus, forgotPassword, resetEmailStatus } = props
+  const {
+    emailStatus,
+    errorMessage,
+    forgotPassword,
+    resetEmailStatus
+  } = props
   return (
     <Fragment>
       <Navbar bg="white" variant="light" className="shadow-sm">
@@ -77,7 +81,7 @@ const RecoverPassword: React.FC<React.ComponentState> = props => {
         <Row className="mt-4">
           <Col sm="6" className="mx-auto">
 
-            { displayAlert(emailStatus, resetEmailStatus) }
+            { displayAlert(emailStatus, errorMessage, resetEmailStatus) }
 
             <Card className="shadow-sm border-0">
               <Card.Body className="py-5">
@@ -122,9 +126,11 @@ const RecoverPassword: React.FC<React.ComponentState> = props => {
                             }}
                             onBlur={handleBlur}
                             value={values.email}
-                            isValid={touched.email && !errors.email}
                             isInvalid={touched.email && (!!errors.email)}
                           />
+                          <Form.Control.Feedback type="invalid">
+                            {errors.email}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </Form.Row>
                       <Form.Row>
@@ -153,8 +159,9 @@ const RecoverPassword: React.FC<React.ComponentState> = props => {
   )
 }
 
-const stateToProps = (state: { password: { emailStatus: number }}) => ({
-  emailStatus: state.password.emailStatus
+const stateToProps = (state: any) => ({
+  emailStatus: state.password.emailStatus,
+  errorMessage: state.error.message
 })
 
 const actions = (dispatch: (action: { type: string; payload: any }) => any) => ({
